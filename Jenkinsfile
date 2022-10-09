@@ -3,10 +3,10 @@ pipeline {
     
     stages {
 
-        stage('increment version') {
+        stage('increment version 2') {
             steps {
                 script {
-                    echo "Incrementing version"
+                    echo "Incrementing version 2"
                     dir('app') {
                         npm version minor
                         sh "cat package.json| grep version"
