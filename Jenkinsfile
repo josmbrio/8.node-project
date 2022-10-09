@@ -14,6 +14,8 @@ pipeline {
                         def file = readJSON file:"package.json"
                         def version = file.version
                         env.IMAGE_NAME = "node-app:${version}-$BUILD_NUMBER"
+
+                        echo "Image Name: $IMAGE_NAME"
                     }
                     
                 }
