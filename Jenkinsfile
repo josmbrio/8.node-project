@@ -40,14 +40,13 @@ pipeline {
                     echo "Building image"
                     sh "docker build . -t josmbrio/my-repo:$IMAGE_NAME"
 
-                    withCredentials([
-                        usernamePassword(
-                            credentialsId: "docker-hub-repo",
-                            usernameVariable: "USER",
-                            passwordVariable: "PASS")
-                    ])
-                    sh "echo $PASS | docker login -u josmbrio --password-stdin"
-                    sh "docker push josmbrio/my-repo:$IMAGE_NAME"
+                    withCredentials([usernamePassword(credentialsId: "docker-hub-repo",usernameVariable: "USER", passwordVariable: "PASS")
+                    ]) {
+                        sh "echo $PASS | docker login -u josmbrio --password-stdin"
+                        sh "docker push josmbrio/my-repo:$IMAGE_NAME"
+                    }
+                    
+                    
                     
                 }
             }
