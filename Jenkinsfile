@@ -5,7 +5,7 @@ pipeline {
 
         stage('increment version') {
             steps {
-                sript {
+                script {
                     echo "Incrementing version"
 
                 }
@@ -14,7 +14,7 @@ pipeline {
 
         stage('test') {
             steps {
-                sript {
+                script {
                     echo "Testing"
                 }
             }
@@ -22,7 +22,7 @@ pipeline {
 
         stage('package app') {
             steps {
-                sript {
+                script {
                     echo "Packaging app"
                 }
             }
@@ -30,7 +30,7 @@ pipeline {
         
         stage('build image') {
             steps {
-                sript {
+                script {
                     echo "Building image"
                 }
             }
@@ -38,7 +38,7 @@ pipeline {
 
         stage('commit version') {
             steps {
-                sript {
+                script {
                     echo "Commiting version"
                 }
             }
