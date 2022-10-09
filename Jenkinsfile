@@ -8,7 +8,7 @@ pipeline {
                 script {
                     echo "Incrementing version 2"
                     dir('app') {
-                        withNPM(npmrcConfig: 'MyNpmrcConfig') {
+                        withNPM(npmrcConfig: 'b97bb3ec-ebe2-4223-928a-3731008eec45') {
                         sh 'npm install'
                     }
                     }
