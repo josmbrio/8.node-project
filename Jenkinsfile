@@ -7,7 +7,7 @@ pipeline {
             steps {
                 script {
                     echo "Incrementing version"
-
+                    npm version minor
                 }
             }
         }
