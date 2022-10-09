@@ -42,9 +42,9 @@ pipeline {
 
                     withCredentials([
                         usernamePassword(
-                            credentials: "docker-hub-repo",
-                            usernameVariable: USER,
-                            passwordVariable: PASS)
+                            credentialsId: "docker-hub-repo",
+                            usernameVariable: "USER",
+                            passwordVariable: "PASS")
                     ])
                     sh "echo $PASS | docker login -u josmbrio --password-stdin"
                     sh "docker push josmbrio/my-repo:$IMAGE_NAME"
