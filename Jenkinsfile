@@ -8,7 +8,7 @@ pipeline {
                 script {
                     echo "Incrementing version"
                     dir('app') {
-                        sh "npm version minor"
+                        npm version minor
                         sh "cat package.json| grep version"
                     }
                     
