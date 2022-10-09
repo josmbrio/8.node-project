@@ -8,8 +8,9 @@ pipeline {
                 script {
                     echo "Incrementing version 2"
                     dir('app') {
-                        npm version minor
-                        sh "cat package.json| grep version"
+                        withNPM(npmrcConfig: 'MyNpmrcConfig') {
+                        sh 'npm install'
+                    }
                     }
                     
                 }
