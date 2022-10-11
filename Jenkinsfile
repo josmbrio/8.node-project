@@ -40,7 +40,7 @@ pipeline {
             steps {
                 script {
                     echo "Building image"
-                    groovyScript.build_image("josmbrio/my-repo", $IMAGE_NAME)                     
+                    groovyScript.build_image("josmbrio/my-repo", "$IMAGE_NAME")                     
                 }
             }
         }
