@@ -4,18 +4,17 @@ library identifier: 'jenkins-shared-library@main', retriever: modernSCM(
  credentialsId: 'gitlab-credentials'
 ])
 
-def groovyScript
 pipeline {
     agent any
     
     stages {
-//        stage("init Groovy scripts") {
-//            steps {
-//                script {
-//                    groovyScript = load "script.groovy"
-//                }              
-//            }           
-//        }
+        stage("init Groovy scripts") {
+            steps {
+                script {
+                    load "increment_version_app_nodejs.groovy"
+                }              
+            }           
+        }
 
         stage("increment version 2") {
             steps {
