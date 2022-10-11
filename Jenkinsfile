@@ -1,20 +1,19 @@
+def groovyScript
 pipeline {
     agent any
     
     stages {
+        stage("init Groovy scripts") {
+            groovyScript = load "script.groovy"
+        }
 
         stage("increment version 2") {
             steps {
                 script {
                     echo "Incrementing version 2"
                     dir("app") {
-                        sh "npm version minor"
-                        sh "cat package.json | grep -i version"
-                    
-                        def file = readJSON file:"package.json"
-                        def version = file.version
-                        env.IMAGE_NAME = "node-app-${version}-$BUILD_NUMBER"
-
+                        def newVersion = increment_version_app_nodejs()
+                        env.IMAGE_NAME = "node-app-${newVersion}-$BUILD_NUMBER"
                         echo "Image Name: $IMAGE_NAME"
                     }
                     
@@ -27,8 +26,7 @@ pipeline {
                 script {
                     echo "Testing"
                     dir("app") {
-                        sh "npm install"
-                        sh "npm test"
+                        test_app_nodejs()
                     }
                 }
             }
@@ -38,16 +36,7 @@ pipeline {
             steps {
                 script {
                     echo "Building image"
-                    sh "docker build . -t josmbrio/my-repo:$IMAGE_NAME"
-
-                    withCredentials([usernamePassword(credentialsId: "docker-hub-repo",usernameVariable: "USER", passwordVariable: "PASS")
-                    ]) {
-                        sh "echo $PASS | docker login -u josmbrio --password-stdin"
-                        sh "docker push josmbrio/my-repo:$IMAGE_NAME"
-                    }
-                    
-                    
-                    
+                    build_image("josmbrio/my-repo", $IMAGE_NAME)                     
                 }
             }
         }
