@@ -1,4 +1,10 @@
-@Library('my-shared-library')
+library identifier: 'jenkins-shared-library@main', retriever: modernSCM(
+[$class: 'GitSCMSource',
+ remote: 'https://myserver/josmbrio/jenkins-shared-library.git',
+ credentialsId: 'gitlab-credentials'
+])
+//@Library('https://myserver/josmbrio/jenkins-shared-library.git')
+
 def groovyScript
 pipeline {
     agent any
