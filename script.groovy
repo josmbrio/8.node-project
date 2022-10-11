@@ -3,7 +3,7 @@ def increment_version_app_nodejs() {
     sh "npm version minor"                  
     def file = readJSON file:"package.json"
     def version = file.version
-    return $version
+    return version
 
 }
 
