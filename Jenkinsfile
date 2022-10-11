@@ -4,7 +4,11 @@ pipeline {
     
     stages {
         stage("init Groovy scripts") {
-            groovyScript = load "script.groovy"
+            steps {
+                script {
+                    groovyScript = load "script.groovy"
+                }              
+            }           
         }
 
         stage("increment version 2") {
