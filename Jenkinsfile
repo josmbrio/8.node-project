@@ -16,7 +16,7 @@ pipeline {
                 script {
                     echo "Incrementing version 2"
                     dir("app") {
-                        def newVersion = increment_version_app_nodejs()
+                        def newVersion = groovyScript.increment_version_app_nodejs()
                         env.IMAGE_NAME = "node-app-${newVersion}-$BUILD_NUMBER"
                         echo "Image Name: $IMAGE_NAME"
                     }
@@ -30,7 +30,7 @@ pipeline {
                 script {
                     echo "Testing"
                     dir("app") {
-                        test_app_nodejs()
+                        groovyScript.test_app_nodejs()
                     }
                 }
             }
@@ -40,7 +40,7 @@ pipeline {
             steps {
                 script {
                     echo "Building image"
-                    build_image("josmbrio/my-repo", $IMAGE_NAME)                     
+                    groovyScript.build_image("josmbrio/my-repo", $IMAGE_NAME)                     
                 }
             }
         }
