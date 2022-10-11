@@ -1,22 +1,28 @@
+library identifier: 'jenkins-shared-library@main', retriever: modernSCM(
+[$class: 'GitSCMSource',
+ remote: 'https://myserver/josmbrio/jenkins-shared-library.git',
+ credentialsId: 'gitlab-credentials'
+])
+
 def groovyScript
 pipeline {
     agent any
     
     stages {
-        stage("init Groovy scripts") {
-            steps {
-                script {
-                    groovyScript = load "script.groovy"
-                }              
-            }           
-        }
+//        stage("init Groovy scripts") {
+//            steps {
+//                script {
+//                    groovyScript = load "script.groovy"
+//                }              
+//            }           
+//        }
 
         stage("increment version 2") {
             steps {
                 script {
                     echo "Incrementing version 2"
                     dir("app") {
-                        def newVersion = groovyScript.increment_version_app_nodejs()
+                        def newVersion = increment_version_app_nodejs()
                         env.IMAGE_NAME = "node-app-${newVersion}-$BUILD_NUMBER"
                         echo "Image Name: $IMAGE_NAME"
                     }
@@ -30,7 +36,7 @@ pipeline {
                 script {
                     echo "Testing"
                     dir("app") {
-                        groovyScript.test_app_nodejs()
+                        test_app_nodejs()
                     }
                 }
             }
@@ -40,7 +46,7 @@ pipeline {
             steps {
                 script {
                     echo "Building image"
-                    groovyScript.build_image("josmbrio/my-repo", "$IMAGE_NAME")                     
+                    build_image("josmbrio/my-repo", "$IMAGE_NAME")                     
                 }
             }
         }
