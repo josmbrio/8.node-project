@@ -67,7 +67,7 @@ pipeline {
                         sh 'scp docker-compose.yaml ${SERVER_IP}'
                         sh 'scp start-commands.sh ${SERVER_IP}'
                         //ejecutar start-commands.sh en remoto en instancia ec2 pasando IMAGE_NAME
-                        sh 'ssh o StrictHostKeyChecking=no ${SERVER_IP} bash ${startScript}'
+                        sh 'ssh -o StrictHostKeyChecking=no ${SERVER_IP} bash ${startScript}'
                     } 
                     
                            
