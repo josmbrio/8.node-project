@@ -26,6 +26,11 @@ pipeline {
         }
 */
         stage("increment version 2") {
+            when {
+                expression {
+                    env.GIT_BRANCH == "main"
+                }
+            }
             steps {
                 script {
                     echo "Incrementing version 2"
@@ -51,6 +56,11 @@ pipeline {
         }
         
         stage("build image") {
+            when {
+                expression {
+                    env.GIT_BRANCH == "main"
+                }
+            }
             steps {
                 script {
                     echo "Building image"
@@ -60,6 +70,11 @@ pipeline {
         }
 
         stage("deploy") {
+            when {
+                expression {
+                    return env.GIT_BRANCH == "main"
+                }
+            }
             steps {
                 script {
                     echo "Deploying app"
