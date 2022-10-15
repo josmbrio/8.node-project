@@ -8,6 +8,11 @@ library identifier: 'jenkins-shared-library@main', retriever: modernSCM(
 def groovyScript
 pipeline {
     agent any
+
+    tools {
+        nodejs 'nodejs-18.7.0'
+    }   
+
     environment {
         SERVER_IP = "18.234.234.175"
         SERVER_USER = "ec2-user"
