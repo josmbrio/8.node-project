@@ -12,6 +12,7 @@ pipeline {
         SERVER_IP = "18.234.234.175"
         SERVER_USER = "ec2-user"
         SERVER_CREDENTIALS = "ec2-credentials-ex"
+        SERVER_APP_PATH = "/app"
 
     }
     
@@ -65,10 +66,10 @@ pipeline {
                     def startScript = 'start-commands.sh ${IMAGE_NAME}'
                     sshagent(["${SERVER_CREDENTIALS}"]) {
                         //copiar docker-compose.yaml y start-commands.sh a instancia ec2
-                        sh "scp docker-compose.yaml ${SERVER_USER}@${SERVER_IP}:~/"
-                        sh "scp start-commands.sh ${SERVER_USER}@${SERVER_IP}:~/"
+                        sh "scp docker-compose.yaml ${SERVER_USER}@${SERVER_IP}:${SERVER_APP_PATH}"
+                        sh "scp start-commands.sh ${SERVER_USER}@${SERVER_IP}:${SERVER_APP_PATH}"
                         //ejecutar start-commands.sh en remoto en instancia ec2 pasando IMAGE_NAME
-                        sh "ssh -o StrictHostKeyChecking=no ${SERVER_USER}@${SERVER_IP} bash ~/${startScript}"
+                        sh "ssh -o StrictHostKeyChecking=no ${SERVER_USER}@${SERVER_IP} bash ${SERVER_APP_PATH}/${startScript}"
                     } 
                     
                            
