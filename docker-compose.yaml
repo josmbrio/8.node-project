@@ -1,0 +1,7 @@
+version: '3'
+services:
+  node-app:
+    image: josmbrio/my-repo:${IMAGE_NAME}
+    ports: 
+      - 3000:3000
+    container_name: node-app

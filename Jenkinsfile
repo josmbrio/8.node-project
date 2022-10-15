@@ -8,6 +8,11 @@ library identifier: 'jenkins-shared-library@main', retriever: modernSCM(
 def groovyScript
 pipeline {
     agent any
+    environment {
+        SERVER_IP = "18.234.234.175"
+        SERVER_CREDENTIALS = "ec2-credentials-ex"
+
+    }
     
     stages {
 /*        stage("init Groovy scripts") {
@@ -48,6 +53,24 @@ pipeline {
                 script {
                     echo "Building image"
                     build_image("josmbrio/my-repo", "$IMAGE_NAME")                     
+                }
+            }
+        }
+
+        stage("deploy") {
+            steps {
+                script {
+                    echo "Deploying app"
+                    def startScript = 'start-commands.sh ${IMAGE_NAME}'
+                    sshagent([${SERVER_CREDENTIALS}]) {
+                        //copiar docker-compose.yaml y start-commands.sh a instancia ec2
+                        sh 'scp docker-compose.yaml ${SERVER_IP}'
+                        sh 'scp start-commands.sh ${SERVER_IP}'
+                        //ejecutar start-commands.sh en remoto en instancia ec2 pasando IMAGE_NAME
+                        sh 'ssh o StrictHostKeyChecking=no ${SERVER_IP} bash ${startScript}'
+                    } 
+                    
+                           
                 }
             }
         }
