@@ -62,7 +62,7 @@ pipeline {
                 script {
                     echo "Deploying app"
                     def startScript = 'start-commands.sh ${IMAGE_NAME}'
-                    sshagent(['${SERVER_CREDENTIALS'}]) {
+                    sshagent(['${SERVER_CREDENTIALS}']) {
                         //copiar docker-compose.yaml y start-commands.sh a instancia ec2
                         sh 'scp docker-compose.yaml ${SERVER_IP}'
                         sh 'scp start-commands.sh ${SERVER_IP}'
